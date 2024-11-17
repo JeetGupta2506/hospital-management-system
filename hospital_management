@@ -1,0 +1,415 @@
+#include <iostream>
+#include <vector>
+#include <string>
+#include <map>
+
+using namespace std;
+
+
+class Doctor {
+public:
+    string name;
+    string specialization;
+    bool isAvailable;
+    string workingHours;
+
+    Doctor(string n, string spec, bool avail, string hours)
+        : name(n), specialization(spec), isAvailable(avail), workingHours(hours) {}
+
+    void displayDoctorInfo() {
+        cout << "Doctor Name: " << name << "\n";
+        cout << "Specialization: " << specialization << "\n";
+        cout << "Availability: " << (isAvailable ? "Available" : "Not Available") << "\n";
+        cout << "Working Hours: " << workingHours << "\n";
+    }
+};
+
+
+class Patient {
+public:
+    string name;
+    int age;
+    string disease;
+    string medicalHistory; 
+
+    Patient(string n, int a, string d, string history)
+        : name(n), age(a), disease(d), medicalHistory(history) {}
+
+    void displayPatientInfo() {
+        cout << "Patient Name: " << name << "\n";
+        cout << "Age: " << age << "\n";
+        cout << "Disease: " << disease << "\n";
+        cout << "Medical History: " << medicalHistory << "\n";
+    }
+
+    void updateHistory(string newHistory) {
+        medicalHistory += " | " + newHistory; 
+    }
+};
+
+
+class Billing {
+public:
+    double consultationFee;
+    double medicineCost;
+    double totalCost;
+
+    Billing(double fee, double medicine)
+        : consultationFee(fee), medicineCost(medicine), totalCost(fee + medicine) {}
+
+    void displayBill() {
+        cout << "Consultation Fee: " << consultationFee << "\n";
+        cout << "Medicine Cost: " << medicineCost << "\n";
+        cout << "Total Cost: " << totalCost << "\n";
+    }
+};
+
+
+class Medicine {
+public:
+    string name;
+    int stock;
+    double price;
+
+    Medicine(string n, int s, double p) : name(n), stock(s), price(p) {}
+
+    void displayMedicineInfo() {
+        cout << "Medicine Name: " << name << "\n";
+        cout << "Stock: " << stock << "\n";
+        cout << "Price: " << price << "\n";
+    }
+
+    bool dispenseMedicine(int quantity) {
+        if (stock >= quantity) {
+            stock -= quantity;
+            return true;
+        } else {
+            cout << "Insufficient stock of " << name << ".\n";
+            return false;
+        }
+    }
+};
+
+
+class Staff {
+public:
+    string name;
+    string role;
+
+    Staff(string n, string r) : name(n), role(r) {}
+
+    void displayStaffInfo() {
+        cout << "Staff Name: " << name << "\n";
+        cout << "Role: " << role << "\n";
+    }
+};
+
+
+class Appointment {
+public:
+    Patient patient;
+    Doctor doctor;
+    string date;
+    string time;
+
+    Appointment(Patient p, Doctor d, string dt, string t)
+        : patient(p), doctor(d), date(dt), time(t) {}
+
+    void displayAppointmentInfo() {
+        cout << "Appointment Details: \n";
+        cout << "Patient: " << patient.name << " | Doctor: " << doctor.name << "\n";
+        cout << "Date: " << date << " | Time: " << time << "\n";
+    }
+};
+
+
+class HospitalManagementSystem {
+private:
+    vector<Doctor> doctors;
+    vector<Patient> patients;
+    vector<Appointment> appointments;
+    vector<Staff> staff;
+    vector<Medicine> medicines;
+
+public:
+    
+    void addDoctor() {
+        string name, specialization, workingHours;
+        bool isAvailable;
+
+        cout << "Enter Doctor's Name: ";
+        cin >> name;
+        cout << "Enter Specialization: ";
+        cin >> specialization;
+        cout << "Enter Doctor's Working Hours (e.g., 9 AM - 5 PM): ";
+        cin >> workingHours;
+        cout << "Is the doctor available (1/0): ";
+        cin >> isAvailable;
+
+        Doctor newDoctor(name, specialization, isAvailable, workingHours);
+        doctors.push_back(newDoctor);
+
+        cout << "Doctor added successfully!" << endl;
+    }
+
+   
+    void addPatient() {
+        string name, disease, medicalHistory;
+        int age;
+
+        cout << "Enter Patient's Name: ";
+        cin >> name;
+        cout << "Enter Patient's Age: ";
+        cin >> age;
+        cout << "Enter Patient's Disease: ";
+        cin >> disease;
+        cout << "Enter Patient's Medical History: ";
+        cin >> medicalHistory;
+
+        Patient newPatient(name, age, disease, medicalHistory);
+        patients.push_back(newPatient);
+
+        cout << "Patient added successfully!" << endl;
+    }
+
+   
+    void addStaff() {
+        string name, role;
+
+        cout << "Enter Staff's Name: ";
+        cin >> name;
+        cout << "Enter Staff's Role (e.g., Nurse, Technician): ";
+        cin >> role;
+
+        Staff newStaff(name, role);
+        staff.push_back(newStaff);
+
+        cout << "Staff member added successfully!" << endl;
+    }
+
+   
+    void addMedicine() {
+        string name;
+        int stock;
+        double price;
+
+        cout << "Enter Medicine Name: ";
+        cin >> name;
+        cout << "Enter Medicine Stock: ";
+        cin >> stock;
+        cout << "Enter Medicine Price: ";
+        cin >> price;
+
+        Medicine newMedicine(name, stock, price);
+        medicines.push_back(newMedicine);
+
+        cout << "Medicine added successfully!" << endl;
+    }
+
+   
+    void scheduleAppointment() {
+        if (doctors.empty() || patients.empty()) {
+            cout << "No doctors or patients available for scheduling appointments!" << endl;
+            return;
+        }
+
+        int doctorIndex, patientIndex;
+        string date, time;
+
+        cout << "Select Doctor (0 to " << doctors.size() - 1 << "): ";
+        cin >> doctorIndex;
+        cout << "Select Patient (0 to " << patients.size() - 1 << "): ";
+        cin >> patientIndex;
+
+        cout << "Enter Appointment Date (DD-MM-YYYY): ";
+        cin >> date;
+        cout << "Enter Appointment Time (HH:MM): ";
+        cin >> time;
+
+        if (doctorIndex >= 0 && doctorIndex < doctors.size() && patientIndex >= 0 && patientIndex < patients.size()) {
+            Appointment newAppointment(patients[patientIndex], doctors[doctorIndex], date, time);
+            appointments.push_back(newAppointment);
+            cout << "Appointment scheduled successfully!" << endl;
+        } else {
+            cout << "Invalid doctor or patient index!" << endl;
+        }
+    }
+
+    
+    void dispenseMedicine() {
+        string medicineName;
+        int quantity;
+
+        cout << "Enter Medicine Name: ";
+        cin >> medicineName;
+        cout << "Enter Quantity: ";
+        cin >> quantity;
+
+        for (auto& med : medicines) {
+            if (med.name == medicineName) {
+                if (med.dispenseMedicine(quantity)) {
+                    cout << "Medicine dispensed successfully!\n";
+                }
+                return;
+            }
+        }
+        cout << "Medicine not found!\n";
+    }
+
+    
+    void generateBill() {
+        int patientIndex;
+        double medicineCost;
+
+        cout << "Select Patient for Billing (0 to " << patients.size() - 1 << "): ";
+        cin >> patientIndex;
+
+        if (patientIndex >= 0 && patientIndex < patients.size()) {
+            cout << "Enter total Medicine cost for patient: ";
+            cin >> medicineCost;
+
+            Billing bill(200.0, medicineCost);
+            bill.displayBill();
+        } else {
+            cout << "Invalid patient index!" << endl;
+        }
+    }
+
+   
+    void viewDoctors() {
+        if (doctors.empty()) {
+            cout << "No doctors available!" << endl;
+            return;
+        }
+
+        for (int i = 0; i < doctors.size(); ++i) {
+            cout << "Doctor " << i + 1 << ":\n";
+            doctors[i].displayDoctorInfo();
+            cout << endl;
+        }
+    }
+
+    
+    void viewPatients() {
+        if (patients.empty()) {
+            cout << "No patients available!" << endl;
+            return;
+        }
+
+        for (int i = 0; i < patients.size(); ++i) {
+            cout << "Patient " << i + 1 << ":\n";
+            patients[i].displayPatientInfo();
+            cout << endl;
+        }
+    }
+
+    
+    void viewAppointments() {
+        if (appointments.empty()) {
+            cout << "No appointments scheduled!" << endl;
+            return;
+        }
+
+        for (int i = 0; i < appointments.size(); ++i) {
+            appointments[i].displayAppointmentInfo();
+            cout << endl;
+        }
+    }
+
+   
+    void viewStaff() {
+        if (staff.empty()) {
+            cout << "No staff available!" << endl;
+            return;
+        }
+
+        for (int i = 0; i < staff.size(); ++i) {
+            staff[i].displayStaffInfo();
+            cout << endl;
+        }
+    }
+
+
+    void viewMedicines() {
+        if (medicines.empty()) {
+            cout << "No medicines available!" << endl;
+            return;
+        }
+
+        for (int i = 0; i < medicines.size(); ++i) {
+            medicines[i].displayMedicineInfo();
+            cout << endl;
+        }
+    }
+};
+
+
+int main() {
+    HospitalManagementSystem hospital;
+    int choice;
+
+    do {
+        cout << "\nHospital Management System\n";
+        cout << "1. Add Doctor\n";
+        cout << "2. Add Patient\n";
+        cout << "3. Add Staff\n";
+        cout << "4. Add Medicine\n";
+        cout << "5. Schedule Appointment\n";
+        cout << "6. Dispense Medicine\n";
+        cout << "7. Generate Billing\n";
+        cout << "8. View Doctors\n";
+        cout << "9. View Patients\n";
+        cout << "10. View Appointments\n";
+        cout << "11. View Staff\n";
+        cout << "12. View Medicines\n";
+        cout << "13. Exit\n";
+        cout << "Enter your choice: ";
+        cin >> choice;
+
+        switch (choice) {
+            case 1:
+                hospital.addDoctor();
+                break;
+            case 2:
+                hospital.addPatient();
+                break;
+            case 3:
+                hospital.addStaff();
+                break;
+            case 4:
+                hospital.addMedicine();
+                break;
+            case 5:
+                hospital.scheduleAppointment();
+                break;
+            case 6:
+                hospital.dispenseMedicine();
+                break;
+            case 7:
+                hospital.generateBill();
+                break;
+            case 8:
+                hospital.viewDoctors();
+                break;
+            case 9:
+                hospital.viewPatients();
+                break;
+            case 10:
+                hospital.viewAppointments();
+                break;
+            case 11:
+                hospital.viewStaff();
+                break;
+            case 12:
+                hospital.viewMedicines();
+                break;
+            case 13:
+                cout << "Exiting system...\n";
+                break;
+            default:
+                cout << "Invalid choice. Please try again.\n";
+        }
+    } while (choice != 13);
+
+    return 0;
+}
