@@ -5,18 +5,26 @@
 
 using namespace std;
 
-
-class Doctor {
+// Base class for shared attributes like name, and optionally age (for Patient and Staff)
+class Person {
 public:
     string name;
+
+    Person(string n) : name(n) {}
+
+    virtual void displayInfo() const = 0; // Pure virtual function
+};
+
+class Doctor : public Person {
+public:
     string specialization;
     bool isAvailable;
     string workingHours;
 
     Doctor(string n, string spec, bool avail, string hours)
-        : name(n), specialization(spec), isAvailable(avail), workingHours(hours) {}
+        : Person(n), specialization(spec), isAvailable(avail), workingHours(hours) {}
 
-    void displayDoctorInfo() {
+    void displayInfo() const override {
         cout << "Doctor Name: " << name << "\n";
         cout << "Specialization: " << specialization << "\n";
         cout << "Availability: " << (isAvailable ? "Available" : "Not Available") << "\n";
@@ -24,18 +32,16 @@ public:
     }
 };
 
-
-class Patient {
+class Patient : public Person {
 public:
-    string name;
     int age;
     string disease;
-    string medicalHistory; 
+    string medicalHistory;
 
     Patient(string n, int a, string d, string history)
-        : name(n), age(a), disease(d), medicalHistory(history) {}
+        : Person(n), age(a), disease(d), medicalHistory(history) {}
 
-    void displayPatientInfo() {
+    void displayInfo() const override {
         cout << "Patient Name: " << name << "\n";
         cout << "Age: " << age << "\n";
         cout << "Disease: " << disease << "\n";
@@ -43,10 +49,21 @@ public:
     }
 
     void updateHistory(string newHistory) {
-        medicalHistory += " | " + newHistory; 
+        medicalHistory += " | " + newHistory;
     }
 };
 
+class Staff : public Person {
+public:
+    string role;
+
+    Staff(string n, string r) : Person(n), role(r) {}
+
+    void displayInfo() const override {
+        cout << "Staff Name: " << name << "\n";
+        cout << "Role: " << role << "\n";
+    }
+};
 
 class Billing {
 public:
@@ -57,13 +74,12 @@ public:
     Billing(double fee, double medicine)
         : consultationFee(fee), medicineCost(medicine), totalCost(fee + medicine) {}
 
-    void displayBill() {
+    void displayBill() const {
         cout << "Consultation Fee: " << consultationFee << "\n";
         cout << "Medicine Cost: " << medicineCost << "\n";
         cout << "Total Cost: " << totalCost << "\n";
     }
 };
-
 
 class Medicine {
 public:
@@ -73,7 +89,7 @@ public:
 
     Medicine(string n, int s, double p) : name(n), stock(s), price(p) {}
 
-    void displayMedicineInfo() {
+    void displayMedicineInfo() const {
         cout << "Medicine Name: " << name << "\n";
         cout << "Stock: " << stock << "\n";
         cout << "Price: " << price << "\n";
@@ -90,21 +106,6 @@ public:
     }
 };
 
-
-class Staff {
-public:
-    string name;
-    string role;
-
-    Staff(string n, string r) : name(n), role(r) {}
-
-    void displayStaffInfo() {
-        cout << "Staff Name: " << name << "\n";
-        cout << "Role: " << role << "\n";
-    }
-};
-
-
 class Appointment {
 public:
     Patient patient;
@@ -115,13 +116,12 @@ public:
     Appointment(Patient p, Doctor d, string dt, string t)
         : patient(p), doctor(d), date(dt), time(t) {}
 
-    void displayAppointmentInfo() {
+    void displayAppointmentInfo() const {
         cout << "Appointment Details: \n";
         cout << "Patient: " << patient.name << " | Doctor: " << doctor.name << "\n";
         cout << "Date: " << date << " | Time: " << time << "\n";
     }
 };
-
 
 class HospitalManagementSystem {
 private:
@@ -132,7 +132,6 @@ private:
     vector<Medicine> medicines;
 
 public:
-    
     void addDoctor() {
         string name, specialization, workingHours;
         bool isAvailable;
@@ -152,7 +151,6 @@ public:
         cout << "Doctor added successfully!" << endl;
     }
 
-   
     void addPatient() {
         string name, disease, medicalHistory;
         int age;
@@ -172,7 +170,6 @@ public:
         cout << "Patient added successfully!" << endl;
     }
 
-   
     void addStaff() {
         string name, role;
 
@@ -187,7 +184,6 @@ public:
         cout << "Staff member added successfully!" << endl;
     }
 
-   
     void addMedicine() {
         string name;
         int stock;
@@ -206,7 +202,6 @@ public:
         cout << "Medicine added successfully!" << endl;
     }
 
-   
     void scheduleAppointment() {
         if (doctors.empty() || patients.empty()) {
             cout << "No doctors or patients available for scheduling appointments!" << endl;
@@ -235,7 +230,6 @@ public:
         }
     }
 
-    
     void dispenseMedicine() {
         string medicineName;
         int quantity;
@@ -256,7 +250,6 @@ public:
         cout << "Medicine not found!\n";
     }
 
-    
     void generateBill() {
         int patientIndex;
         double medicineCost;
@@ -275,7 +268,6 @@ public:
         }
     }
 
-   
     void viewDoctors() {
         if (doctors.empty()) {
             cout << "No doctors available!" << endl;
@@ -284,12 +276,11 @@ public:
 
         for (int i = 0; i < doctors.size(); ++i) {
             cout << "Doctor " << i + 1 << ":\n";
-            doctors[i].displayDoctorInfo();
+            doctors[i].displayInfo();
             cout << endl;
         }
     }
 
-    
     void viewPatients() {
         if (patients.empty()) {
             cout << "No patients available!" << endl;
@@ -298,12 +289,11 @@ public:
 
         for (int i = 0; i < patients.size(); ++i) {
             cout << "Patient " << i + 1 << ":\n";
-            patients[i].displayPatientInfo();
+            patients[i].displayInfo();
             cout << endl;
         }
     }
 
-    
     void viewAppointments() {
         if (appointments.empty()) {
             cout << "No appointments scheduled!" << endl;
@@ -316,7 +306,6 @@ public:
         }
     }
 
-   
     void viewStaff() {
         if (staff.empty()) {
             cout << "No staff available!" << endl;
@@ -324,11 +313,10 @@ public:
         }
 
         for (int i = 0; i < staff.size(); ++i) {
-            staff[i].displayStaffInfo();
+            staff[i].displayInfo();
             cout << endl;
         }
     }
-
 
     void viewMedicines() {
         if (medicines.empty()) {
@@ -342,7 +330,6 @@ public:
         }
     }
 };
-
 
 int main() {
     HospitalManagementSystem hospital;
