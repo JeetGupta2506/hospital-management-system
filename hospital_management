@@ -42,7 +42,7 @@ public:
     int room;
 
     Patient(string n,int id, int a, string d, string history,int r)
-        : Person(n), patient_id(id) age(a), disease(d), medicalHistory(history), room(r) {}
+        : Person(n), patient_id(id), age(a), disease(d), medicalHistory(history), room(r) {}
 
     void displayInfo() const override {
         cout << "Patient Name: " << name << "\n";
@@ -171,7 +171,7 @@ public:
 
             cout << "Enter Patient's Name: ";
             cin >> name;
-            court<<"Assign Patient ID: "
+            cout<<"Assign Patient ID: ";
             cin>> id;
             cout << "Enter Patient's Age: ";
             cin >> age;
@@ -183,7 +183,9 @@ public:
             cin>>room;
 
             if(!doctors.empty()){
-                
+                cout<<"Assign a doctor: 0 to "<<doctors.size()<< endl;
+                cin>>doctor_index;
+                if(doctor_index>=0 && )
             }
 
             if (name.empty() || disease.empty() || medicalHistory.empty() || age <= 0) {
