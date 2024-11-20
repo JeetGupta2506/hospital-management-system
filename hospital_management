@@ -4,10 +4,9 @@
 #include <map>
 #include <stdexcept>  // for exception handling
 
-
 using namespace std;
 
-// Base class for shared attributes like name, and optionally age (for Patient and Staff)
+// Abstract class for shared attributes like name, and optionally age (for Patient and Staff)
 class Person {
 public:
     string name;
@@ -36,18 +35,22 @@ public:
 
 class Patient : public Person {
 public:
+    int patient_id;
     int age;
     string disease;
     string medicalHistory;
+    int room;
 
-    Patient(string n, int a, string d, string history)
-        : Person(n), age(a), disease(d), medicalHistory(history) {}
+    Patient(string n,int id, int a, string d, string history,int r)
+        : Person(n), patient_id(id) age(a), disease(d), medicalHistory(history), room(r) {}
 
     void displayInfo() const override {
         cout << "Patient Name: " << name << "\n";
+        cout << "Patient ID " << patient_id << "\n";
         cout << "Age: " << age << "\n";
         cout << "Disease: " << disease << "\n";
         cout << "Medical History: " << medicalHistory << "\n";
+        cout << "Room number: " << room << "\n";
     }
 
     void updateHistory(string newHistory) {
@@ -164,22 +167,30 @@ public:
     void addPatient() {
         try {
             string name, disease, medicalHistory;
-            int age;
+            int age, id, room, doctor_index;
 
             cout << "Enter Patient's Name: ";
             cin >> name;
+            court<<"Assign Patient ID: "
+            cin>> id;
             cout << "Enter Patient's Age: ";
             cin >> age;
             cout << "Enter Patient's Disease: ";
             cin >> disease;
             cout << "Enter Patient's Medical History: ";
             cin >> medicalHistory;
+            cout<<"Enter Patient's Room Number: ";
+            cin>>room;
+
+            if(!doctors.empty()){
+                
+            }
 
             if (name.empty() || disease.empty() || medicalHistory.empty() || age <= 0) {
                 throw invalid_argument("Invalid input! Please ensure all fields are filled correctly.");
             }
 
-            Patient newPatient(name, age, disease, medicalHistory);
+            Patient newPatient(name, id, age, disease, medicalHistory, room);
             patients.push_back(newPatient);
 
             cout << "Patient added successfully!" << endl;
@@ -400,14 +411,15 @@ int main() {
         cout << "3. Add Staff\n";
         cout << "4. Add Medicine\n";
         cout << "5. Schedule Appointment\n";
-        cout << "6. Dispense Medicine\n";
-        cout << "7. Generate Billing\n";
-        cout << "8. View Doctors\n";
-        cout << "9. View Patients\n";
-        cout << "10. View Appointments\n";
-        cout << "11. View Staff\n";
-        cout << "12. View Medicines\n";
-        cout << "13. Exit\n";
+        cout << "6. View Pateint's Details\n";
+        cout << "7. Dispense Medicine\n";
+        cout << "8. Generate Billing\n";
+        cout << "9. View Doctors\n";
+        cout << "10. View Patients\n";
+        cout << "11. View Appointments\n";
+        cout << "12. View Staff\n";
+        cout << "13. View Medicines\n";
+        cout << "14. Exit\n";
         cout << "Enter your choice: ";
         cin >> choice;
 
