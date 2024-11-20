@@ -2,6 +2,7 @@
 #include <vector>
 #include <string>
 #include <map>
+#include <stdexcept>  // for exception handling
 
 using namespace std;
 
@@ -133,138 +134,194 @@ private:
 
 public:
     void addDoctor() {
-        string name, specialization, workingHours;
-        bool isAvailable;
+        try {
+            string name, specialization, workingHours;
+            bool isAvailable;
 
-        cout << "Enter Doctor's Name: ";
-        cin >> name;
-        cout << "Enter Specialization: ";
-        cin >> specialization;
-        cout << "Enter Doctor's Working Hours (e.g., 9 AM - 5 PM): ";
-        cin >> workingHours;
-        cout << "Is the doctor available (1/0): ";
-        cin >> isAvailable;
+            cout << "Enter Doctor's Name: ";
+            cin >> name;
+            cout << "Enter Specialization: ";
+            cin >> specialization;
+            cout << "Enter Doctor's Working Hours (e.g., 9 AM - 5 PM): ";
+            cin >> workingHours;
+            cout << "Is the doctor available (1/0): ";
+            cin >> isAvailable;
 
-        Doctor newDoctor(name, specialization, isAvailable, workingHours);
-        doctors.push_back(newDoctor);
+            if (name.empty() || specialization.empty() || workingHours.empty()) {
+                throw invalid_argument("Invalid input! Fields cannot be empty.");
+            }
 
-        cout << "Doctor added successfully!" << endl;
+            Doctor newDoctor(name, specialization, isAvailable, workingHours);
+            doctors.push_back(newDoctor);
+
+            cout << "Doctor added successfully!" << endl;
+        } catch (const invalid_argument& e) {
+            cout << "Error: " << e.what() << endl;
+        }
     }
 
     void addPatient() {
-        string name, disease, medicalHistory;
-        int age;
+        try {
+            string name, disease, medicalHistory;
+            int age;
 
-        cout << "Enter Patient's Name: ";
-        cin >> name;
-        cout << "Enter Patient's Age: ";
-        cin >> age;
-        cout << "Enter Patient's Disease: ";
-        cin >> disease;
-        cout << "Enter Patient's Medical History: ";
-        cin >> medicalHistory;
+            cout << "Enter Patient's Name: ";
+            cin >> name;
+            cout << "Enter Patient's Age: ";
+            cin >> age;
+            cout << "Enter Patient's Disease: ";
+            cin >> disease;
+            cout << "Enter Patient's Medical History: ";
+            cin >> medicalHistory;
 
-        Patient newPatient(name, age, disease, medicalHistory);
-        patients.push_back(newPatient);
+            if (name.empty() || disease.empty() || medicalHistory.empty() || age <= 0) {
+                throw invalid_argument("Invalid input! Please ensure all fields are filled correctly.");
+            }
 
-        cout << "Patient added successfully!" << endl;
+            Patient newPatient(name, age, disease, medicalHistory);
+            patients.push_back(newPatient);
+
+            cout << "Patient added successfully!" << endl;
+        } catch (const invalid_argument& e) {
+            cout << "Error: " << e.what() << endl;
+        }
     }
 
     void addStaff() {
-        string name, role;
+        try {
+            string name, role;
 
-        cout << "Enter Staff's Name: ";
-        cin >> name;
-        cout << "Enter Staff's Role (e.g., Nurse, Technician): ";
-        cin >> role;
+            cout << "Enter Staff's Name: ";
+            cin >> name;
+            cout << "Enter Staff's Role (e.g., Nurse, Technician): ";
+            cin >> role;
 
-        Staff newStaff(name, role);
-        staff.push_back(newStaff);
+            if (name.empty() || role.empty()) {
+                throw invalid_argument("Staff name and role cannot be empty.");
+            }
 
-        cout << "Staff member added successfully!" << endl;
+            Staff newStaff(name, role);
+            staff.push_back(newStaff);
+
+            cout << "Staff member added successfully!" << endl;
+        } catch (const invalid_argument& e) {
+            cout << "Error: " << e.what() << endl;
+        }
     }
 
     void addMedicine() {
-        string name;
-        int stock;
-        double price;
+        try {
+            string name;
+            int stock;
+            double price;
 
-        cout << "Enter Medicine Name: ";
-        cin >> name;
-        cout << "Enter Medicine Stock: ";
-        cin >> stock;
-        cout << "Enter Medicine Price: ";
-        cin >> price;
+            cout << "Enter Medicine Name: ";
+            cin >> name;
+            cout << "Enter Medicine Stock: ";
+            cin >> stock;
+            cout << "Enter Medicine Price: ";
+            cin >> price;
 
-        Medicine newMedicine(name, stock, price);
-        medicines.push_back(newMedicine);
+            if (name.empty() || stock <= 0 || price <= 0) {
+                throw invalid_argument("Invalid input! Medicine name cannot be empty and stock/price must be greater than 0.");
+            }
 
-        cout << "Medicine added successfully!" << endl;
+            Medicine newMedicine(name, stock, price);
+            medicines.push_back(newMedicine);
+
+            cout << "Medicine added successfully!" << endl;
+        } catch (const invalid_argument& e) {
+            cout << "Error: " << e.what() << endl;
+        }
     }
 
     void scheduleAppointment() {
-        if (doctors.empty() || patients.empty()) {
-            cout << "No doctors or patients available for scheduling appointments!" << endl;
-            return;
-        }
+        try {
+            if (doctors.empty() || patients.empty()) {
+                throw runtime_error("No doctors or patients available for scheduling appointments!");
+            }
 
-        int doctorIndex, patientIndex;
-        string date, time;
+            int doctorIndex, patientIndex;
+            string date, time;
 
-        cout << "Select Doctor (0 to " << doctors.size() - 1 << "): ";
-        cin >> doctorIndex;
-        cout << "Select Patient (0 to " << patients.size() - 1 << "): ";
-        cin >> patientIndex;
+            cout << "Select Doctor (0 to " << doctors.size() - 1 << "): ";
+            cin >> doctorIndex;
+            cout << "Select Patient (0 to " << patients.size() - 1 << "): ";
+            cin >> patientIndex;
 
-        cout << "Enter Appointment Date (DD-MM-YYYY): ";
-        cin >> date;
-        cout << "Enter Appointment Time (HH:MM): ";
-        cin >> time;
+            if (doctorIndex < 0 || doctorIndex >= doctors.size() || patientIndex < 0 || patientIndex >= patients.size()) {
+                throw out_of_range("Invalid doctor or patient index!");
+            }
 
-        if (doctorIndex >= 0 && doctorIndex < doctors.size() && patientIndex >= 0 && patientIndex < patients.size()) {
+            cout << "Enter Appointment Date (DD-MM-YYYY): ";
+            cin >> date;
+            cout << "Enter Appointment Time (HH:MM): ";
+            cin >> time;
+
             Appointment newAppointment(patients[patientIndex], doctors[doctorIndex], date, time);
             appointments.push_back(newAppointment);
+
             cout << "Appointment scheduled successfully!" << endl;
-        } else {
-            cout << "Invalid doctor or patient index!" << endl;
+        } catch (const exception& e) {
+            cout << "Error: " << e.what() << endl;
         }
     }
 
     void dispenseMedicine() {
-        string medicineName;
-        int quantity;
+        try {
+            string medicineName;
+            int quantity;
 
-        cout << "Enter Medicine Name: ";
-        cin >> medicineName;
-        cout << "Enter Quantity: ";
-        cin >> quantity;
+            cout << "Enter Medicine Name: ";
+            cin >> medicineName;
+            cout << "Enter Quantity: ";
+            cin >> quantity;
 
-        for (auto& med : medicines) {
-            if (med.name == medicineName) {
-                if (med.dispenseMedicine(quantity)) {
-                    cout << "Medicine dispensed successfully!\n";
-                }
-                return;
+            if (quantity <= 0) {
+                throw invalid_argument("Quantity must be greater than zero.");
             }
+
+            bool found = false;
+            for (auto& med : medicines) {
+                if (med.name == medicineName) {
+                    found = true;
+                    if (med.dispenseMedicine(quantity)) {
+                        cout << "Medicine dispensed successfully!\n";
+                    }
+                    return;
+                }
+            }
+            if (!found) {
+                throw runtime_error("Medicine not found!");
+            }
+        } catch (const exception& e) {
+            cout << "Error: " << e.what() << endl;
         }
-        cout << "Medicine not found!\n";
     }
 
     void generateBill() {
-        int patientIndex;
-        double medicineCost;
+        try {
+            int patientIndex;
+            double medicineCost;
 
-        cout << "Select Patient for Billing (0 to " << patients.size() - 1 << "): ";
-        cin >> patientIndex;
+            cout << "Select Patient for Billing (0 to " << patients.size() - 1 << "): ";
+            cin >> patientIndex;
 
-        if (patientIndex >= 0 && patientIndex < patients.size()) {
+            if (patientIndex < 0 || patientIndex >= patients.size()) {
+                throw out_of_range("Invalid patient index!");
+            }
+
             cout << "Enter total Medicine cost for patient: ";
             cin >> medicineCost;
 
+            if (medicineCost < 0) {
+                throw invalid_argument("Medicine cost cannot be negative.");
+            }
+
             Billing bill(200.0, medicineCost);
             bill.displayBill();
-        } else {
-            cout << "Invalid patient index!" << endl;
+        } catch (const exception& e) {
+            cout << "Error: " << e.what() << endl;
         }
     }
 
