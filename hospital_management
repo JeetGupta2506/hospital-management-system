@@ -4,6 +4,7 @@
 #include <map>
 #include <stdexcept>  // for exception handling
 
+class doctor;
 using namespace std;
 
 // Base class for shared attributes like name, and optionally age (for Patient and Staff)
