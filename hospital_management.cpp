@@ -1,4 +1,5 @@
 #include <iostream>
+#include<iomanip>
 #include <vector>
 #include <stdexcept>
 #include <string>
@@ -303,6 +304,7 @@ void view_patient_details()
   {
     if (patient.patient_id == patientID)
     {
+<<<<<<< Updated upstream
       cout << "Patient Details:\n";
       patient.display_info();
       cout << "----------------------\n";
@@ -310,6 +312,18 @@ void view_patient_details()
       cout << "Billing Details:\n";
       bill.displayBill();
       return;
+=======
+        if (patient.patient_id == patientID)
+        {   
+            cout << "Patient Details:\n";
+            patient.display_info();
+            cout<<setfill('-')<<setw(50)<<"-"<<endl;
+            Billing bill(200.0, 0.0);  // example fixed billing amount
+            cout << "Billing Details:\n";
+            bill.displayBill();
+            return;
+        }
+>>>>>>> Stashed changes
     }
   }
   cout << "Patient not found.\n";
@@ -318,51 +332,91 @@ void view_patient_details()
 // Function to view Doctors
 void view_doctors()
 {
+<<<<<<< Updated upstream
   for (const auto &d : doctors)
   {
     d.display_info();
     cout << "----------------------\n";
   }
+=======
+    for (const auto &doctor : doctors)
+    {   cout<<setfill('-')<<setw(50)<<"-"<<endl;
+        doctor.display_info();
+        cout<<setfill('-')<<setw(50)<<"-"<<endl;
+    }
+>>>>>>> Stashed changes
 }
 
 // Function to view Patients
 void view_patients()
 {
+<<<<<<< Updated upstream
   for ( auto &p : patients)
   {
     p.show_patients();
     cout << "----------------------\n";
   }
+=======
+    for (const auto &patient : patients)
+    {   cout<<setfill('-')<<setw(50)<<"-"<<endl;
+        patient.display_info();
+        cout<<setfill('-')<<setw(50)<<"-"<<endl;
+    }
+>>>>>>> Stashed changes
 }
 
 // Function to view Appointments
 void view_appointments()
 {
+<<<<<<< Updated upstream
   for (const auto &a : appointments)
   {
     a.display_info();
     cout << "----------------------\n";
   }
+=======
+    for (const auto &appointment : appointments)
+    {   cout<<setfill('-')<<setw(50)<<"-"<<endl;
+        appointment.display_info();
+        cout<<setfill('-')<<setw(50)<<"-"<<endl;
+    }
+>>>>>>> Stashed changes
 }
 
 // Function to view Staff
 void view_staff()
 {
+<<<<<<< Updated upstream
   for (const auto &s : staff)
   {
     s.display_info();
     cout << "----------------------\n";
   }
+=======
+    for (const auto &staffMember : staff)
+    {   cout<<setfill('-')<<setw(50)<<"-"<<endl;
+        staffMember.display_info();
+        cout<<setfill('-')<<setw(50)<<"-"<<endl;
+    }
+>>>>>>> Stashed changes
 }
 
 // Function to view Medicines
 void view_medicines()
 {
+<<<<<<< Updated upstream
   for (const auto &m : medicines)
   {
     m.display_info();
     cout << "----------------------\n";
   }
+=======
+    for (const auto &medicine : medicines)
+    {   cout<<setfill('-')<<setw(50)<<"-"<<endl;
+        medicine.display_info();
+        cout<<setfill('-')<<setw(50)<<"-"<<endl;
+    }
+>>>>>>> Stashed changes
 }
 
 // Generate billing
@@ -388,14 +442,21 @@ void billing()
 // Exit system
 void exit_system()
 {
+<<<<<<< Updated upstream
   cout << "Exiting system...\n";
   exit(0);
+=======
+    cout << "Exiting system...\n";
+    exit(0);
+    cout<<setfill('-')<<setw(50)<<"-"<<endl;
+>>>>>>> Stashed changes
 }
 
 int main()
 {
   int choice;
 
+<<<<<<< Updated upstream
   while (true)
   {
     cout << "\nHospital Management System\n";
@@ -462,6 +523,76 @@ int main()
       break;
     default:
       cout << "Invalid choice, please try again.\n";
+=======
+    while (true)
+    {   cout<<setfill('-')<<setw(50)<<"-"<<endl;
+        cout << "\nHospital Management System\n";
+        cout << "1. Add Doctor\n";
+        cout << "2. Add Patient\n";
+        cout << "3. Add Staff\n";
+        cout << "4. Add Medicine\n";
+        cout << "5. Schedule Appointment\n";
+        cout << "6. View Patient's Details\n";
+        cout << "7. Dispense Medicine\n";
+        cout << "8. Generate Billing\n";
+        cout << "9. View Doctors\n";
+        cout << "10. View Patients\n";
+        cout << "11. View Appointments\n";
+        cout << "12. View Staff\n";
+        cout << "13. View Medicines\n";
+        cout << "14. Exit\n";
+        cout << "Enter your choice: ";
+        cin >> choice;
+        cout<<setfill('-')<<setw(50)<<"-"<<endl;
+
+        switch (choice)
+        {
+        case 1:
+            add_doctor();
+            break;
+        case 2:
+            add_patient();
+            break;
+        case 3:
+            add_staff();
+            break;
+        case 4:
+            add_medicine();
+            break;
+        case 5:
+            schedule_appointment();
+            break;
+        case 6:
+            view_patient_details();
+            break;
+        case 7:
+            // Implement Dispense Medicine logic here (if required)
+            break;
+        case 8:
+            billing();
+            break;
+        case 9:
+            view_doctors();
+            break;
+        case 10:
+            view_patients();
+            break;
+        case 11:
+            view_appointments();
+            break;
+        case 12:
+            view_staff();
+            break;
+        case 13:
+            view_medicines();
+            break;
+        case 14:
+            exit_system();
+            break;
+        default:
+            cout << "Invalid choice, please try again.\n";
+        }
+>>>>>>> Stashed changes
     }
   }
 
