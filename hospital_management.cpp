@@ -521,9 +521,10 @@ int main()
     cout << "12. View Medicines\n";
     cout << "13. View Staff\n";
     cout << "14. Exit\n";
-    cout << setfill('.') << setw(80) << "." << endl;
+    court<<endl;
     cout << "Enter your choice: ";
     cin >> choice;
+    cout << setfill('.') << setw(80) << "." << endl;
 
     switch (choice)
     {
