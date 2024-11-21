@@ -333,7 +333,6 @@ void view_doctors()
 
   for ( auto &d : doctors)
   {
-    
     d.display_info();
   }
   cout << setfill('-') << setw(80) << "-" << endl;
@@ -378,9 +377,8 @@ void view_staff()
   <<left<<setw(20)<<setfill(' ')<<"Staff Role" 
   <<left<<setw(20)<<setfill(' ')<<endl;
   for (const auto &s : staff)
-  { cout<<setfill('-')<<setw(50)<<"-"<<endl;
+  { 
     s.display_info();
-    cout<<setfill('-')<<setw(50)<<"-"<<endl;
   }
   cout << setfill('-') << setw(80) << "-" << endl;
 }
@@ -397,9 +395,7 @@ void view_medicines()
   <<left<<setw(20)<<setfill(' ')<<endl;
   for (const auto &m : medicines)
   { 
-    cout<<setfill('-')<<setw(50)<<"-"<<endl;
     m.display_info();
-    cout<<setfill('-')<<setw(50)<<"-"<<endl;
   }
   cout << setfill('-') << setw(80) << "-" << endl;
 }
@@ -526,6 +522,7 @@ int main()
     cout << "13. View Staff\n";
     cout << "14. Exit\n";
     cout << "Enter your choice: ";
+    cout << setfill('.') << setw(80) << "." << endl;
     cin >> choice;
 
     switch (choice)
