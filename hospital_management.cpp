@@ -379,6 +379,79 @@ void view_medicines()
   }
 }
 
+// Function to dispense medicine
+void dispense_medicine()
+{
+    int patientID;
+    cout << "Enter Patient ID to dispense medicine: ";
+    cin >> patientID;
+
+    // Find the patient
+    Patient* patient = nullptr;
+    for (auto &p : patients)
+    {
+        if (p.patient_id == patientID)
+        {
+            patient = &p;
+            break;
+        }
+    }
+
+    if (patient == nullptr)
+    {
+        cout << "Patient not found.\n";
+        return;
+    }
+
+    // Show available medicines
+    cout << "Available Medicines:\n";
+    for (int i = 0; i < medicines.size(); ++i)
+    {
+        cout << i + 1 << ". " << medicines[i].name << " (Price: " << medicines[i].price << ", Quantity: " << medicines[i].quantity << ")\n";
+    }
+
+    int medicine_index;
+    cout << "Enter the number corresponding to the medicine to dispense: ";
+    cin >> medicine_index;
+
+    // Validate medicine selection
+    if (medicine_index < 1 || medicine_index > medicines.size())
+    {
+        cout << "Invalid selection!\n";
+        return;
+    }
+
+    // Access selected medicine
+    Medicine &selected_medicine = medicines[medicine_index - 1];
+
+    // Check if the medicine is available in stock
+    if (selected_medicine.quantity <= 0)
+    {
+        cout << "Sorry, the selected medicine is out of stock.\n";
+        return;
+    }
+
+    // Ask how many units of the medicine to dispense
+    int quantity_to_dispense;
+    cout << "Enter quantity to dispense: ";
+    cin >> quantity_to_dispense;
+
+    if (quantity_to_dispense > selected_medicine.quantity)
+    {
+        cout << "Not enough stock to dispense the requested quantity.\n";
+        return;
+    }
+
+    // Reduce the quantity of the medicine
+    selected_medicine.quantity -= quantity_to_dispense;
+
+    // Optionally, you could keep a record of dispensed medicines for the patient
+    // For now, we'll just print a message
+    cout << "Dispensed " << quantity_to_dispense << " units of " << selected_medicine.name << " to patient " << patient->name << ".\n";
+    cout << "Remaining stock: " << selected_medicine.quantity << " units.\n";
+}
+
+
 // Generate billing
 void billing()
 {
@@ -451,7 +524,7 @@ int main()
       view_patient_details();
       break;
     case 7:
-      // Implement Dispense Medicine logic here (if required)
+     dispense_medicine();
       break;
     case 8:
       billing();
