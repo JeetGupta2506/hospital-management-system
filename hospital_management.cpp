@@ -69,8 +69,8 @@ public:
   
   void show_patients(){
     cout << "Patient Name: " << name << "\n";
-    cout << "Disease: " << disease << "\n";
     cout << "Patient ID: " << patient_id << "\n";
+    cout << "Disease: " << disease << "\n";
     cout << "Room number: " << room << "\n";
   }
 
