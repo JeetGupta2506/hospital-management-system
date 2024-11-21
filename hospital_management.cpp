@@ -69,7 +69,7 @@ public:
   }
   
   void show_patients(){
-    cout<< patient_id << setw(20) << name << setw(20) << disease << setw(20) << room <<endl;
+    cout<< setw(20)<<patient_id << setw(20) << name << setw(20) << disease << setw(20) << room <<endl;
   }
 
   void add_report(const string &report)
@@ -326,19 +326,26 @@ void view_doctors()
 // Function to view Patients
 void view_patients()
 {
-  cout << "Patient ID" << setw(20) << "Patient Name" << setw(20) << "Disease" << setw(20) << "Room" <<endl;
+  cout << setfill('-') << setw(80) << "-" << endl;
+  cout 
+  <<left<< setw(20)<<setfill(' ')<<"Patient ID" 
+  << left<<setw(20)<<setfill(' ')<< "Patient Name" 
+  <<left<< setw(20)<<setfill(' ') << "Disease" 
+  << left<<setw(20)<<setfill(' ')<< "Room"
+  <<left<<setw(20)<<setfill(' ')<<endl;
   for ( auto &p : patients)
   {
     p.show_patients();
   }
-  cout<<setfill('-')<<setw(50)<<"-"<<endl;
+  cout << setfill('-') << setw(80) << "-" << endl;
+ 
 }
 
 // Function to view Appointments
 void view_appointments()
 {
   for (const auto &a : appointments)
-  {
+  { cout<<setfill('-')<<setw(50)<<"-"<<endl;
     a.display_info();
     cout<<setfill('-')<<setw(50)<<"-"<<endl;
   }
@@ -348,7 +355,7 @@ void view_appointments()
 void view_staff()
 {
   for (const auto &s : staff)
-  {
+  { cout<<setfill('-')<<setw(50)<<"-"<<endl;
     s.display_info();
     cout<<setfill('-')<<setw(50)<<"-"<<endl;
   }
@@ -358,7 +365,8 @@ void view_staff()
 void view_medicines()
 {
   for (const auto &m : medicines)
-  {
+  { 
+    cout<<setfill('-')<<setw(50)<<"-"<<endl;
     m.display_info();
     cout<<setfill('-')<<setw(50)<<"-"<<endl;
   }
