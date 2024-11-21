@@ -11,7 +11,7 @@ class Person
 public:
     string name;
     Person(string n) : name(n) {}
-    virtual void displayInfo() const = 0;  // Pure virtual function for displaying info
+    virtual void display_info() const = 0;  // Pure virtual function for displaying info
 };
 
 // Class representing a Doctor (Inherits from Person)
@@ -23,7 +23,7 @@ public:
 
     Doctor(string n, int id, string spec) : Person(n), doctor_id(id), specialization(spec) {}
 
-    void displayInfo() const override
+    void display_info() const override
     {
         cout << "Doctor Name: " << name << "\n";
         cout << "Doctor ID: " << doctor_id << "\n";
@@ -46,7 +46,7 @@ public:
     Patient(string n, int id, int a, string d, string history, int r, Doctor *doctor)
         : Person(n), patient_id(id), age(a), disease(d), medicalHistory(history), room(r), treating_doctor(doctor) {}
 
-    void displayInfo() const override
+    void display_info() const override
     {
         cout << "Patient Name: " << name << "\n";
         cout << "Patient ID: " << patient_id << "\n";
@@ -89,7 +89,7 @@ public:
 
     Medicine(string n, float p, int q) : name(n), price(p), quantity(q) {}
 
-    void displayInfo() const
+    void display_info() const
     {
         cout << "Medicine Name: " << name << "\n";
         cout << "Price: " << price << "\n";
@@ -106,7 +106,7 @@ public:
 
     Staff(string n, int id, string r) : Person(n), staff_id(id), role(r) {}
 
-    void displayInfo() const override
+    void display_info() const override
     {
         cout << "Staff Name: " << name << "\n";
         cout << "Staff ID: " << staff_id << "\n";
@@ -124,7 +124,7 @@ public:
 
     Appointment(int p_id, int d_id, string d) : patient_id(p_id), doctor_id(d_id), date(d) {}
 
-    void displayInfo() const
+    void display_info() const
     {
         cout << "Appointment for Patient ID: " << patient_id << "\n";
         cout << "Doctor ID: " << doctor_id << "\n";
@@ -314,7 +314,7 @@ void viewPatientDetails()
         if (patient.patient_id == patientID)
         {
             cout << "Patient Details:\n";
-            patient.displayInfo();
+            patient.display_info();
             cout << "----------------------\n";
             Billing bill(200.0, 0.0);  // example fixed billing amount
             cout << "Billing Details:\n";
@@ -330,7 +330,7 @@ void viewDoctors()
 {
     for (const auto &doctor : doctors)
     {
-        doctor.displayInfo();
+        doctor.display_info();
         cout << "----------------------\n";
     }
 }
@@ -340,7 +340,7 @@ void viewPatients()
 {
     for (const auto &patient : patients)
     {
-        patient.displayInfo();
+        patient.display_info();
         cout << "----------------------\n";
     }
 }
@@ -350,7 +350,7 @@ void viewAppointments()
 {
     for (const auto &appointment : appointments)
     {
-        appointment.displayInfo();
+        appointment.display_info();
         cout << "----------------------\n";
     }
 }
@@ -360,7 +360,7 @@ void viewStaff()
 {
     for (const auto &staffMember : staff)
     {
-        staffMember.displayInfo();
+        staffMember.display_info();
         cout << "----------------------\n";
     }
 }
@@ -370,7 +370,7 @@ void viewMedicines()
 {
     for (const auto &medicine : medicines)
     {
-        medicine.displayInfo();
+        medicine.display_info();
         cout << "----------------------\n";
     }
 }
