@@ -26,9 +26,7 @@ public:
 
   void display_info() const override
   {
-    cout << "Doctor Name: " << name << "\n";
-    cout << "Doctor ID: " << doctor_id << "\n";
-    cout << "Specialization: " << specialization << "\n";
+    cout<<setw(20) << name << setw(20) << doctor_id <<setw(20)  << specialization << "\n";
   }
 };
 
@@ -316,11 +314,20 @@ void view_patient_details()
 // Function to view Doctors
 void view_doctors()
 {
-  for (const auto &d : doctors)
+  cout << setfill('-') << setw(80) << "-" << endl;
+
+  cout 
+  <<left<<setw(20)<<setfill(' ')<<"Doctor name" 
+  <<left<<setw(20)<<setfill(' ')<<"Doctor id" 
+  <<left<<setw(20)<<setfill(' ')<<"specialization" 
+  <<left<<setw(20)<<setfill(' ')<<endl;
+
+  for ( auto &d : doctors)
   {
+    
     d.display_info();
-    cout<<setfill('-')<<setw(50)<<"-"<<endl;
   }
+  cout << setfill('-') << setw(80) << "-" << endl;
 }
 
 // Function to view Patients
