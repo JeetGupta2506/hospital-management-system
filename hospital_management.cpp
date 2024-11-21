@@ -26,7 +26,10 @@ public:
 
   void display_info() const override
   {
-    cout<<setw(20) << name << setw(20) << doctor_id <<setw(20)  << specialization << "\n";
+    cout<<
+      setw(20) << name << 
+      setw(20) << doctor_id <<
+      setw(20)  << specialization << "\n";
   }
 };
 
@@ -67,7 +70,11 @@ public:
   }
   
   void show_patients(){
-    cout<< setw(20)<<patient_id << setw(20) << name << setw(20) << disease << setw(20) << room <<endl;
+    cout<< 
+      setw(20)<<patient_id << 
+      setw(20) << name << 
+      setw(20) << disease << 
+      setw(20) << room <<endl;
   }
 
   void add_report(const string &report)
@@ -92,9 +99,10 @@ public:
 
   void display_info() const
   {
-    cout << "Medicine Name: " << name << "\n";
-    cout << "Price: " << price << "\n";
-    cout << "Quantity Available: " << quantity << "\n";
+    cout<<
+    setw(20)<< name << 
+    setw(20) << price <<
+    setw(20) << quantity<<endl;
   }
 };
 
@@ -109,9 +117,10 @@ public:
 
   void display_info() const override
   {
-    cout << "Staff Name: " << name << "\n";
-    cout << "Staff ID: " << staff_id << "\n";
-    cout << "Role: " << role << "\n";
+    cout << 
+    setw(20)<< name << 
+    setw(20) << staff_id <<
+    setw(20) << role <<endl;
   }
 };
 
@@ -361,22 +370,38 @@ void view_appointments()
 // Function to view Staff
 void view_staff()
 {
+  cout << setfill('-') << setw(80) << "-" << endl;
+
+  cout 
+  <<left<<setw(20)<<setfill(' ')<<"Staff Name" 
+  <<left<<setw(20)<<setfill(' ')<<"Staff ID" 
+  <<left<<setw(20)<<setfill(' ')<<"Staff Role" 
+  <<left<<setw(20)<<setfill(' ')<<endl;
   for (const auto &s : staff)
   { cout<<setfill('-')<<setw(50)<<"-"<<endl;
     s.display_info();
     cout<<setfill('-')<<setw(50)<<"-"<<endl;
   }
+  cout << setfill('-') << setw(80) << "-" << endl;
 }
 
 // Function to view Medicines
 void view_medicines()
 {
+  cout << setfill('-') << setw(80) << "-" << endl;
+
+  cout 
+  <<left<<setw(20)<<setfill(' ')<<"Medicine Name" 
+  <<left<<setw(20)<<setfill(' ')<<"Price" 
+  <<left<<setw(20)<<setfill(' ')<<"Quantity" 
+  <<left<<setw(20)<<setfill(' ')<<endl;
   for (const auto &m : medicines)
   { 
     cout<<setfill('-')<<setw(50)<<"-"<<endl;
     m.display_info();
     cout<<setfill('-')<<setw(50)<<"-"<<endl;
   }
+  cout << setfill('-') << setw(80) << "-" << endl;
 }
 
 // Function to dispense medicine
