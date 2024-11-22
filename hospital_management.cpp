@@ -165,22 +165,28 @@ vector<Staff> staff;
 vector<Medicine> medicines;
 vector<Appointment> appointments;
 
-void add_doctor()
-{
-  string name, specialization;
-  int id;
+void add_doctor() {
+    string name, specialization;
+    int id;
 
-  cout << "Enter Doctor's Name: ";
-  cin >> name;
-  cout << "Enter Doctor's ID: ";
-  cin >> id;
-  cout << "Enter Doctor's Specialization: ";
-  cin >> specialization;
+    cout << "Enter Doctor's Name: ";
+    cin.ignore(); 
+    getline(cin, name); 
 
-  Doctor new_doc(name, id, specialization);
-  doctors.push_back(new_doc);
-  cout << "Doctor added successfully!\n";
+    cout << "Enter Doctor's ID: ";
+    cin >> id; 
+    cin.ignore(); // Ignore the leftover newline in the buffer
+
+    cout << "Enter Doctor's Specialization: ";
+    cin.ignore();
+    getline(cin, specialization); 
+
+    Doctor new_doc(name, id, specialization);
+    doctors.push_back(new_doc);
+
+    cout << "Doctor added successfully!\n";
 }
+
 
 void add_patient()
 {
@@ -188,15 +194,18 @@ void add_patient()
   int age, id, room, doctor_index;
 
   cout << "Enter Patient's Name: ";
-  cin >> name;
+  cin.ignore();
+  getline(cin,name);
   cout << "Assign Patient ID: ";
   cin >> id;
   cout << "Enter Patient's Age: ";
   cin >> age;
   cout << "Enter Patient's Disease: ";
-  cin >> disease;
+  cin.ignore();
+  getline(cin,disease);
   cout << "Enter Patient's Medical History: ";
-  cin >> medical_history;
+  cin.ignore();
+  getline(cin,medical_history);
   cout << "Enter Patient's Room Number: ";
   cin >> room;
 
@@ -248,11 +257,13 @@ void add_staff()
   int id;
 
   cout << "Enter Staff's Name: ";
-  cin >> name;
+  cin.ignore();
+  getline(cin,name);
   cout << "Enter Staff's ID: ";
   cin >> id;
   cout << "Enter Staff's Role (e.g., Nurse, Administrator): ";
-  cin >> role;
+  cin.ignore();
+  getline(cin,role);
 
   Staff new_staff(name, id, role);
   staff.push_back(new_staff);
@@ -267,7 +278,8 @@ void add_medicine()
   int quantity;
 
   cout << "Enter Medicine Name: ";
-  cin >> name;
+  cin.ignore();
+  getline(cin,name);
   cout << "Enter Medicine Price: ";
   cin >> price;
   cout << "Enter Medicine Quantity: ";
@@ -289,7 +301,8 @@ void schedule_appointment()
   cout << "Enter Doctor ID: ";
   cin >> doctor_id;
   cout << "Enter Appointment Date: ";
-  cin >> date;
+  cin.ignore();
+  getline(cin,date);
 
   Appointment new_appointment(patient_id, doctor_id, date);
   appointments.push_back(new_appointment);
@@ -310,7 +323,7 @@ void view_patient_details()
     {
       cout << "Patient Details:\n";
       patient.display_info();
-      cout << "----------------------\n";
+      cout << setfill('-') << setw(80) << "-" << endl;
       Billing bill(200.0, 0.0); // example fixed billing amount
       cout << "Billing Details:\n";
       bill.displayBill();
